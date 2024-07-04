@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube shortConverter</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .modal-dialog {
+        max-width: 400px;
+    }
+
+    #linkConvertido {
+        background-color: #fff;
+    }
+
+    .btn-copy {
+        cursor: pointer;
+    }
+
+    .jumbotron {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 0.5rem; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header-text {
+        color: #3d55a5;
+        font-weight: bold;
+    }
+    .lead {
+        color: #6c757d;
+    }
+    .input-group-text {
+        background-color: #4661b9;
+        color: white;
+    }
+    .btn-primary {
+        background-color: #4661b9; 
+        border-color: #4661b9;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+</style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h2 class="text-center header-text">YouTube shortConverter</h2>
+            <p class="text-center lead">Insira o link do YouTube Shorts:</p>
+            <div class="input-group mb-3">
+                <input type="text" id="shortsLink" class="form-control" placeholder="Insira o link do YouTube Shorts">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="converterLink()">Converter</button>
+                </div>
+            </div>
+            <p class="text-center lead">Link Convertido:</p>
+            <div class="input-group mb-3">
+                <input type="text" id="linkConvertido" class="form-control" readonly>
+                <div class="input-group-append">
+                    <button id="btnCopiar" class="btn btn-secondary btn-copy" type="button" onclick="copiarLink()">Copiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function converterLink() {
+            var shortsLink = document.getElementById('shortsLink').value.trim();
+            var watchLink = shortsLink.replace("youtube.com/shorts/", "youtube.com/watch?v=");
+            document.getElementById('linkConvertido').value = watchLink;
+        }
+
+        function copiarLink() {
+            var linkConvertido = document.getElementById('linkConvertido');
+            linkConvertido.select();
+            document.execCommand('copy');
+            
+            var btnCopiar = document.getElementById('btnCopiar');
+            btnCopiar.textContent = 'Copiado';
+            
+            setTimeout(function() {
+                btnCopiar.textContent = 'Copiar';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
