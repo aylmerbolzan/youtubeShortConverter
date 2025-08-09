@@ -1,0 +1,16 @@
+{
+    "name": "YouTube shortConverter",
+    "short_name": "YT Converter",
+    "description": "Converta links do YouTube Shorts para formato de vídeo padrão do YouTube",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#FF0000",
+    "icons": [
+        {
+            "src": "https://www.youtube.com/favicon.ico",
+            "sizes": "64x64",
+            "type": "image/x-icon"
+        }
+    ]
+}

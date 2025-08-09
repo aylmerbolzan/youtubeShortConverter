@@ -3,90 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YouTube shortConverter</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta name="description" content="Converta links do YouTube Shorts para formato de vídeo padrão do YouTube facilmente">
+<meta name="keywords" content="youtube, shorts, converter, youtube shorts, video">
+<meta property="og:title" content="YouTube shortConverter">
+<meta property="og:description" content="Converta links do YouTube Shorts para formato de vídeo padrão do YouTube facilmente">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FF0000">
+
+<title>YouTube shortConverter - Converta Shorts para Vídeos</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="https://www.youtube.com/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <style>
-    .modal-dialog {
-        max-width: 400px;
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: none;
+        padding: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .header-text {
+        background: linear-gradient(45deg, #FF0000, #FF5C5C);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 800;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(255, 92, 92, 0.25);
+        border-color: #FF5C5C;
+    }
+
+    .btn {
+        border-radius: 10px;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #FF0000, #FF5C5C);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #FF5C5C, #FF0000);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
     }
 
     #linkConvertido {
-        background-color: #fff;
-    }
-
-    .btn-copy {
-        cursor: pointer;
-    }
-
-    .jumbotron {
         background-color: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-radius: 0.5rem; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: monospace;
     }
-    .header-text {
-        color: #3d55a5;
-        font-weight: bold;
+
+    .copied-animation {
+        animation: popIn 0.3s ease;
     }
-    .lead {
-        color: #6c757d;
-    }
-    .input-group-text {
-        background-color: #4661b9;
-        color: white;
-    }
-    .btn-primary {
-        background-color: #4661b9; 
-        border-color: #4661b9;
-    }
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
+
+    @keyframes popIn {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
     }
 </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="jumbotron">
-            <h2 class="text-center header-text">YouTube shortConverter</h2>
-            <p class="text-center lead">Insira o link do YouTube Shorts:</p>
-            <div class="input-group mb-3">
-                <input type="text" id="shortsLink" class="form-control" placeholder="Insira o link do YouTube Shorts">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" onclick="converterLink()">Converter</button>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card mb-4">
+                    <h1 class="text-center header-text">
+                        <i class="bi bi-youtube me-2"></i>YouTube shortConverter
+                    </h1>
+                    
+                    <div class="input-group mb-4">
+                        <span class="input-group-text bg-light border-light" title="Cole o link aqui">
+                            <i class="bi bi-link-45deg"></i>
+                        </span>
+                        <input type="text" id="shortsLink" class="form-control" 
+                               placeholder="Cole qualquer link do YouTube (Shorts, watch ou youtu.be)"
+                               aria-label="Link do YouTube">
+                        <button class="btn btn-primary" type="button" onclick="converterLink()"
+                                title="Clique para converter">
+                            <i class="bi bi-arrow-right-circle me-2"></i>Converter
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-light" title="Link convertido">
+                            <i class="bi bi-check2-circle"></i>
+                        </span>
+                        <input type="text" id="linkConvertido" class="form-control" readonly 
+                               placeholder="O link convertido aparecerá aqui"
+                               aria-label="Link convertido">
+                        <button id="btnCopiar" class="btn btn-secondary btn-copy" type="button" 
+                                onclick="copiarLink()" title="Copiar para área de transferência">
+                            <i class="bi bi-clipboard me-2"></i>Copiar
+                        </button>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="text-center mb-3">
+                            <i class="bi bi-clock-history me-2"></i>Histórico de Conversões
+                        </h5>
+                        <div id="historico" class="historico-container" style="max-height: 200px; overflow-y: auto;">
+                            <!-- O histórico será preenchido via JavaScript -->
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <p class="text-center lead">Link Convertido:</p>
-            <div class="input-group mb-3">
-                <input type="text" id="linkConvertido" class="form-control" readonly>
-                <div class="input-group-append">
-                    <button id="btnCopiar" class="btn btn-secondary btn-copy" type="button" onclick="copiarLink()">Copiar</button>
-                </div>
+
             </div>
         </div>
     </div>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        function converterLink() {
-            var shortsLink = document.getElementById('shortsLink').value.trim();
-            var watchLink = shortsLink.replace("youtube.com/shorts/", "youtube.com/watch?v=");
-            document.getElementById('linkConvertido').value = watchLink;
+        // Configuração do Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('ServiceWorker registrado'))
+                    .catch(err => console.log('Erro no registro do ServiceWorker:', err));
+            });
         }
 
-        function copiarLink() {
-            var linkConvertido = document.getElementById('linkConvertido');
-            linkConvertido.select();
-            document.execCommand('copy');
-            
-            var btnCopiar = document.getElementById('btnCopiar');
-            btnCopiar.textContent = 'Copiado';
-            
-            setTimeout(function() {
-                btnCopiar.textContent = 'Copiar';
-            }, 2000);
+        // Classe para gerenciar o histórico de conversões
+        class HistoricoConversoes {
+            constructor() {
+                this.historico = JSON.parse(localStorage.getItem('historicoConversoes')) || [];
+            }
+
+            adicionar(original, convertido) {
+                this.historico.unshift({ 
+                    original, 
+                    convertido, 
+                    data: new Date().toISOString() 
+                });
+                if (this.historico.length > 10) this.historico.pop();
+                this.salvar();
+                this.atualizarUI();
+            }
+
+            salvar() {
+                localStorage.setItem('historicoConversoes', JSON.stringify(this.historico));
+            }
+
+            atualizarUI() {
+                const historicoEl = document.getElementById('historico');
+                if (!historicoEl) return;
+
+                historicoEl.innerHTML = this.historico
+                    .map(item => `
+                        <div class="historico-item p-2 border-bottom">
+                            <small class="text-muted">${new Date(item.data).toLocaleString()}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-truncate">${item.convertido}</span>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="copiarHistorico('${item.convertido}')">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+            }
         }
+
+        const historico = new HistoricoConversoes();
+
+        // Função para mostrar notificações
+        function mostrarNotificacao(mensagem, tipo = 'success') {
+            Toastify({
+                text: mensagem,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: tipo === 'error' ? "#ff5555" : "#4CAF50",
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        // Função para validar URL do YouTube
+        function validarURLYouTube(url) {
+            const patterns = [
+                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
+                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
+                /(?:https?:\/\/)?youtu\.be\/([a-zA-Z0-9_-]+)/
+            ];
+
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+
+            return null;
+        }
+
+        function converterLink() {
+            const shortsLink = document.getElementById('shortsLink').value.trim();
+            
+            if (!shortsLink) {
+                mostrarNotificacao('Por favor, insira um link do YouTube', 'error');
+                return;
+            }
+
+            const videoId = validarURLYouTube(shortsLink);
+            
+            if (!videoId) {
+                mostrarNotificacao('Link inválido. Por favor, insira um link válido do YouTube', 'error');
+                return;
+            }
+
+            const watchLink = `https://www.youtube.com/watch?v=${videoId}`;
+            const linkConvertido = document.getElementById('linkConvertido');
+            
+            linkConvertido.value = watchLink;
+            linkConvertido.classList.add('copied-animation');
+            
+            setTimeout(() => linkConvertido.classList.remove('copied-animation'), 300);
+            
+            historico.adicionar(shortsLink, watchLink);
+            mostrarNotificacao('Link convertido com sucesso!');
+        }
+
+        async function copiarLink(link) {
+            const texto = link || document.getElementById('linkConvertido').value;
+            const btnCopiar = document.getElementById('btnCopiar');
+            
+            if (!texto) {
+                mostrarNotificacao('Nenhum link para copiar ainda', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(texto);
+                
+                if (btnCopiar) {
+                    const icon = btnCopiar.querySelector('i');
+                    const text = btnCopiar.lastChild;
+                    
+                    icon.className = 'bi bi-check2 me-2';
+                    text.textContent = 'Copiado!';
+                    btnCopiar.classList.add('copied-animation');
+                    
+                    setTimeout(() => {
+                        icon.className = 'bi bi-clipboard me-2';
+                        text.textContent = 'Copiar';
+                        btnCopiar.classList.remove('copied-animation');
+                    }, 2000);
+                }
+
+                mostrarNotificacao('Link copiado para a área de transferência!');
+            } catch (err) {
+                mostrarNotificacao('Erro ao copiar o link', 'error');
+                console.error('Erro ao copiar:', err);
+            }
+        }
+
+        function copiarHistorico(link) {
+            copiarLink(link);
+        }
+
+        // Event Listeners
+        document.getElementById('shortsLink').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                converterLink();
+            }
+        });
+
+        // Inicialização
+        window.addEventListener('load', () => {
+            historico.atualizarUI();
+        });
     </script>
 </body>
 </html>
