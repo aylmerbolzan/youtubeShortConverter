@@ -122,7 +122,7 @@
                             <i class="bi bi-link-45deg"></i>
                         </span>
                         <input type="text" id="shortsLink" class="form-control" 
-                               placeholder="Cole qualquer link do YouTube (Shorts, watch ou youtu.be)"
+                               placeholder="Cole o link do YouTube aqui"
                                aria-label="Link do YouTube">
                         <button class="btn btn-primary" type="button" onclick="converterLink()"
                                 title="Clique para converter">
@@ -135,7 +135,7 @@
                             <i class="bi bi-check2-circle"></i>
                         </span>
                         <input type="text" id="linkConvertido" class="form-control" readonly 
-                               placeholder="O link convertido aparecerá aqui"
+                               placeholder="Copie o link convertido"
                                aria-label="Link convertido">
                         <button id="btnCopiar" class="btn btn-secondary btn-copy" type="button" 
                                 onclick="copiarLink()" title="Copiar para área de transferência">
@@ -147,11 +147,21 @@
                         <h5 class="text-center mb-3">
                             <i class="bi bi-clock-history me-2"></i>Histórico de Conversões
                         </h5>
-                        <div id="historico" class="historico-container" style="max-height: 200px; overflow-y: auto;">
+                        <div id="historico" class="historico-container" style="max-height: 140px; overflow-y: auto;">
                             <!-- O histórico será preenchido via JavaScript -->
                         </div>
                     </div>
                 </div>
+                <footer><center>
+    <p style="margin-bottom: 0px;">Essa solução foi útil para você?</p>
+    <div id="kofi-widget-container">
+      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+      <script type='text/javascript'>kofiwidget2.init('Deixe um cafézinho!', '#72a4f2', 'F1F41EIRDP');kofiwidget2.draw();</script>
+    </div>
+    <br>
+    <p style="font-size: 0.7rem; text-align: center; color: #5c5c5c;">Desenvolvido por<br> <a href="https://bolzan.tech/" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://bolzan.tech/badges/badge-3-b.svg" alt="bolzan.tech"></a></p>
+    </center>
+</footer>
 
             </div>
         </div>
